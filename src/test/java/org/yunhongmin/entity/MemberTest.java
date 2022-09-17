@@ -35,9 +35,9 @@ class MemberTest {
 
     @Test
     public void detachAndMerge() {
-        String id = "memberA";
         String newName = "user2";
-        Member member = createMember(id, "user1");
+        Member member = createMember("user1");
+        Long id = member.getId();
         member.setName(newName);
         mergeMember(member);
 
@@ -56,11 +56,11 @@ class MemberTest {
         em.close();
     }
 
-    public Member createMember(String id, String name) {
+    public Member createMember(String name) {
         EntityManager em = emf.createEntityManager();
         EntityTransaction tx = em.getTransaction();
 
-        Member member = new Member(id, name, 12);
+        Member member = new Member(name, 12);
 
         tx.begin();
         em.persist(member);
@@ -83,13 +83,12 @@ class MemberTest {
     }
 
     private void createRetrieveDeleteMember(EntityManager em) {
-        String id = "1";
         Member member = new Member();
-        member.setId(id);
         member.setName("Yunhong");
         member.setAge(2);
 
         em.persist(member);
+        Long id = member.getId();
         System.out.println("create member");
 
         member.setAge(12);

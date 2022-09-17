@@ -10,15 +10,17 @@ import java.util.Date;
 
 @Entity
 @DynamicUpdate
-@Table(name = "member")
+@Table(name = "member", uniqueConstraints = {@UniqueConstraint(
+        name = "udx_member_name_age", columnNames = {"name", "age"})})
 @NoArgsConstructor
 @Getter @Setter
 public class Member {
     @Id
     @Column(name = "id")
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false, length = 10)
     private String name;
 
     @Column(name = "age")
@@ -37,8 +39,7 @@ public class Member {
     @Lob
     private String description;
 
-    public Member(String id, String name, Integer age) {
-        this.id = id;
+    public Member(String name, Integer age) {
         this.name = name;
         this.age = age;
     }
