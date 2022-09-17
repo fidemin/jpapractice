@@ -1,11 +1,14 @@
 package org.yunhongmin.entity;
 
+import org.hibernate.annotations.DynamicUpdate;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
+@DynamicUpdate
 @Table(name = "member")
 public class Member {
     @Id
@@ -17,6 +20,15 @@ public class Member {
 
     @Column(name = "age")
     private Integer age;
+
+    public Member() {
+    }
+
+    public Member(String id, String name, Integer age) {
+        this.id = id;
+        this.name = name;
+        this.age = age;
+    }
 
     public String getId() {
         return id;
