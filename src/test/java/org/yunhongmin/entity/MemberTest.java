@@ -38,7 +38,7 @@ class MemberTest {
         String newName = "user2";
         Member member = createMember("user1");
         Long id = member.getId();
-        member.setName(newName);
+        member.setUsername(newName);
         mergeMember(member);
 
         EntityManager em = emf.createEntityManager();
@@ -47,7 +47,7 @@ class MemberTest {
         tx.begin();
         Member member3 = em.find(Member.class, id);
         tx.commit();
-        assertEquals(member3.getName(), newName);
+        assertEquals(member3.getUsername(), newName);
 
         tx.begin();
         em.remove(member3);
@@ -56,11 +56,13 @@ class MemberTest {
         em.close();
     }
 
-    public Member createMember(String name) {
+    public Member createMember(String username) {
         EntityManager em = emf.createEntityManager();
         EntityTransaction tx = em.getTransaction();
 
-        Member member = new Member(name, 12);
+        Member member = new Member();
+        member.setUsername(username);
+        member.setAge(12);
 
         tx.begin();
         em.persist(member);
@@ -84,7 +86,9 @@ class MemberTest {
 
     private void createRetrieveDeleteMember(EntityManager em) {
         Member member = new Member();
-        member.setName("Yunhong");
+        member.setUsername("hahahaha");
+        member.setFirstName("Yun");
+        member.setLastName("Min");
         member.setAge(2);
 
         em.persist(member);
@@ -92,11 +96,15 @@ class MemberTest {
         System.out.println("create member");
 
         member.setAge(12);
-        member.setName("YuYu");
+        member.setUsername("YuYu");
+        member.setFirstName("Yun1");
 
         Member foundMember = em.find(Member.class, id);
-        System.out.println("foundMember.getName()  = " + foundMember.getName());
+        System.out.println("foundMember.getUsername()  = " + foundMember.getUsername());
         System.out.println("foundMember.getAge() = " + foundMember.getAge());
+        System.out.println("foundMember.getFullName() = " + foundMember.getFullName());
+        foundMember.setUsername("1234");
+        foundMember.setFirstName("Good");
 
         System.out.println("before JPQL");
         List<Member> members = em.createQuery("select m from Member m", Member.class).getResultList();

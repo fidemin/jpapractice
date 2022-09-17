@@ -4,24 +4,31 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.internal.util.StringHelper;
 
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@DynamicUpdate
+//@DynamicUpdate
 @Table(name = "member", uniqueConstraints = {@UniqueConstraint(
-        name = "udx_member_name_age", columnNames = {"name", "age"})})
-@NoArgsConstructor
-@Getter @Setter
+        name = "udx_member_name_age", columnNames = {"username", "age"})})
 public class Member {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name", nullable = false, length = 10)
-    private String name;
+    @Column(name = "username", nullable = false, length = 10)
+    private String username;
+
+    @Transient
+    private String lastName = "";
+
+    @Transient
+    private String firstName = "";
+
+    private String fullName;
 
     @Column(name = "age")
     private Integer age;
@@ -39,8 +46,42 @@ public class Member {
     @Lob
     private String description;
 
-    public Member(String name, Integer age) {
-        this.name = name;
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setAge(Integer age) {
         this.age = age;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    @Access(AccessType.PROPERTY)
+    @Column(name = "full_name")
+    public String getFullName() {
+        return firstName + lastName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 }
