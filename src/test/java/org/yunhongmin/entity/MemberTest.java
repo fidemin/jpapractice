@@ -48,6 +48,12 @@ class MemberTest {
         Member member3 = em.find(Member.class, id);
         tx.commit();
         assertEquals(member3.getName(), newName);
+
+        tx.begin();
+        em.remove(member3);
+        tx.commit();
+
+        em.close();
     }
 
     public Member createMember(String id, String name) {
