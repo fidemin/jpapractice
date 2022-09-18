@@ -119,6 +119,13 @@ class Member1Test {
 
         assertEquals(1, members2.size());
 
+        member2.setTeam(null);
+        List<Member1> members3 = em.createQuery(jpql, Member1.class)
+                .setParameter("teamName", "center").getResultList();
+
+        assertEquals(0, members3.size());
+
+
         em.remove(member2);
         em.remove(member1);
         em.remove(team1);
