@@ -1,10 +1,4 @@
-package org.yunhongmin.entity;
-
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.internal.util.StringHelper;
+package org.yunhongmin.practice.entity;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -13,7 +7,7 @@ import java.util.Date;
 //@DynamicUpdate
 @Table(name = "member", uniqueConstraints = {@UniqueConstraint(
         name = "udx_member_name_age", columnNames = {"username", "age"})})
-public class Member {
+public class Member1 {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)

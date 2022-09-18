@@ -1,4 +1,4 @@
-package org.yunhongmin.entity;
+package org.yunhongmin.practice.entity;
 
 import org.junit.jupiter.api.Test;
 
@@ -6,12 +6,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
-
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class MemberTest {
+class Member1Test {
     EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpapractice");
 
     @Test
@@ -36,7 +35,7 @@ class MemberTest {
     @Test
     public void detachAndMerge() {
         String newName = "user2";
-        Member member = createMember("user1");
+        Member1 member = createMember("user1");
         Long id = member.getId();
         member.setUsername(newName);
         mergeMember(member);
@@ -45,7 +44,7 @@ class MemberTest {
         EntityTransaction tx = em.getTransaction();
 
         tx.begin();
-        Member member3 = em.find(Member.class, id);
+        Member1 member3 = em.find(Member1.class, id);
         tx.commit();
         assertEquals(member3.getUsername(), newName);
 
@@ -56,11 +55,11 @@ class MemberTest {
         em.close();
     }
 
-    public Member createMember(String username) {
+    public Member1 createMember(String username) {
         EntityManager em = emf.createEntityManager();
         EntityTransaction tx = em.getTransaction();
 
-        Member member = new Member();
+        Member1 member = new Member1();
         member.setUsername(username);
         member.setAge(12);
 
@@ -72,12 +71,12 @@ class MemberTest {
         return member;
     }
 
-    public Member mergeMember(Member member) {
+    public Member1 mergeMember(Member1 member) {
         EntityManager em = emf.createEntityManager();
         EntityTransaction tx = em.getTransaction();
 
         tx.begin();
-        Member mergedMember = em.merge(member);
+        Member1 mergedMember = em.merge(member);
         tx.commit();
 
         em.close();
@@ -85,7 +84,7 @@ class MemberTest {
     }
 
     private void createRetrieveDeleteMember(EntityManager em) {
-        Member member = new Member();
+        Member1 member = new Member1();
         member.setUsername("hahahaha");
         member.setFirstName("Yun");
         member.setLastName("Min");
@@ -99,7 +98,7 @@ class MemberTest {
         member.setUsername("YuYu");
         member.setFirstName("Yun1");
 
-        Member foundMember = em.find(Member.class, id);
+        Member1 foundMember = em.find(Member1.class, id);
         System.out.println("foundMember.getUsername()  = " + foundMember.getUsername());
         System.out.println("foundMember.getAge() = " + foundMember.getAge());
         System.out.println("foundMember.getFullName() = " + foundMember.getFullName());
@@ -107,7 +106,7 @@ class MemberTest {
         foundMember.setFirstName("Good");
 
         System.out.println("before JPQL");
-        List<Member> members = em.createQuery("select m from Member m", Member.class).getResultList();
+        List<Member1> members = em.createQuery("select m from Member m", Member1.class).getResultList();
         System.out.println("after JPQL");
         System.out.println("member.size() = " + members.size());
 
