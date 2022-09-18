@@ -51,6 +51,17 @@ class TeamTest {
         }
         Assertions.assertEquals(2, members.size());
 
+
+        member1 = em.find(Member.class, member1.getId());
+        member1.setTeam(null);
+
+        // flush required to update member1 and update team.members member variable
+        em.flush();
+        em.refresh(team);
+
+        members = team.getMembers();
+        Assertions.assertEquals(1, members.size());
+
         tx.commit();
         em.close();
     }

@@ -9,7 +9,7 @@ import java.util.Date;
 
 @Entity
 @DynamicUpdate
-@Table(name = "member1", uniqueConstraints = {@UniqueConstraint(
+@Table(name = "member", uniqueConstraints = {@UniqueConstraint(
         name = "udx_member_name_age", columnNames = {"username", "age"})})
 public class Member {
     @Id
