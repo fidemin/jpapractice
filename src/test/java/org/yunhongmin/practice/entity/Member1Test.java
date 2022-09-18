@@ -109,9 +109,20 @@ class Member1Test {
 
         assertEquals(2, members.size());
 
+        Team1 team2 = new Team1();
+        team2.setName("team2");
+        em.persist(team2);
+
+        member1.setTeam(team2);
+        List<Member1> members2 = em.createQuery(jpql, Member1.class)
+                .setParameter("teamName", "center").getResultList();
+
+        assertEquals(1, members2.size());
+
         em.remove(member2);
         em.remove(member1);
         em.remove(team1);
+        em.remove(team2);
 
         tx.commit();
         em.close();
