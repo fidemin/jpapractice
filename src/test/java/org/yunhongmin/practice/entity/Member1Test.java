@@ -55,6 +55,32 @@ class Member1Test {
         em.close();
     }
 
+    @Test
+    public void team() {
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction tx = em.getTransaction();
+        tx.begin();
+
+        Team1 team1 = new Team1();
+        team1.setName("center");
+        em.persist(team1);
+
+        Member1 member1 = new Member1();
+        member1.setUsername("a1");
+        member1.setTeam(team1);
+        em.persist(member1);
+
+        Member1 member2 = new Member1();
+        member2.setUsername("a1");
+        member2.setTeam(team1);
+        em.persist(member2);
+
+        tx.commit();
+        em.close();
+
+
+    }
+
     public Member1 createMember(String username) {
         EntityManager em = emf.createEntityManager();
         EntityTransaction tx = em.getTransaction();

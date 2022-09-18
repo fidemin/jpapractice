@@ -1,11 +1,15 @@
 package org.yunhongmin.practice.entity;
 
+import lombok.Getter;
+import lombok.Setter;
+import org.hibernate.annotations.DynamicUpdate;
+
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-//@DynamicUpdate
-@Table(name = "member", uniqueConstraints = {@UniqueConstraint(
+@DynamicUpdate
+@Table(name = "member1", uniqueConstraints = {@UniqueConstraint(
         name = "udx_member_name_age", columnNames = {"username", "age"})})
 public class Member1 {
     @Id
@@ -16,12 +20,22 @@ public class Member1 {
     @Column(name = "username", nullable = false, length = 10)
     private String username;
 
+    /**
+     * ConstraintMode.NO_CONSTRAINT is not working:
+     *  bug fixed in 5.0.0 (<a href="https://hibernate.atlassian.net/browse/HHH-9704">jira ticket</a>)
+     */
+    @ManyToOne
+    @JoinColumn(name = "team_id", foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT))
+    @Setter @Getter
+    private Team1 team;
+
     @Transient
     private String lastName = "";
 
     @Transient
     private String firstName = "";
 
+    @Setter
     private String fullName;
 
     @Column(name = "age")
@@ -73,9 +87,5 @@ public class Member1 {
     @Column(name = "full_name")
     public String getFullName() {
         return firstName + lastName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
     }
 }

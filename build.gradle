@@ -10,7 +10,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.hibernate:hibernate-entitymanager:4.3.10.Final'
+    implementation 'org.hibernate:hibernate-entitymanager:4.3.11.Final'
     implementation 'mysql:mysql-connector-java:8.0.30'
 
     compileOnly 'org.projectlombok:lombok:1.18.24'
