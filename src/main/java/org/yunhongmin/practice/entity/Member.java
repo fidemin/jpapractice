@@ -11,7 +11,7 @@ import java.util.Date;
 @DynamicUpdate
 @Table(name = "member1", uniqueConstraints = {@UniqueConstraint(
         name = "udx_member_name_age", columnNames = {"username", "age"})})
-public class Member1 {
+public class Member {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,7 +27,7 @@ public class Member1 {
     @ManyToOne
     @JoinColumn(name = "team_id", foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT))
     @Setter @Getter
-    private Team1 team;
+    private Team team;
 
     @Transient
     private String lastName = "";

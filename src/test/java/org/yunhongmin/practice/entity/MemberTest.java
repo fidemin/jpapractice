@@ -10,7 +10,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class Member1Test {
+class MemberTest {
     EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpapractice");
 
     @Test
@@ -35,7 +35,7 @@ class Member1Test {
     @Test
     public void detachAndMerge() {
         String newName = "user2";
-        Member1 member = createMember("user1");
+        Member member = createMember("user1");
         Long id = member.getId();
         member.setUsername(newName);
         mergeMember(member);
@@ -44,7 +44,7 @@ class Member1Test {
         EntityTransaction tx = em.getTransaction();
 
         tx.begin();
-        Member1 member3 = em.find(Member1.class, id);
+        Member member3 = em.find(Member.class, id);
         tx.commit();
         assertEquals(member3.getUsername(), newName);
 
@@ -61,16 +61,16 @@ class Member1Test {
         EntityTransaction tx = em.getTransaction();
         tx.begin();
 
-        Team1 team1 = new Team1();
+        Team team1 = new Team();
         team1.setName("center");
         em.persist(team1);
 
-        Member1 member1 = new Member1();
+        Member member1 = new Member();
         member1.setUsername("a1");
         member1.setTeam(team1);
         em.persist(member1);
 
-        Member1 member2 = new Member1();
+        Member member2 = new Member();
         member2.setUsername("a1");
         member2.setTeam(team1);
         em.persist(member2);
@@ -89,38 +89,38 @@ class Member1Test {
         EntityTransaction tx = em.getTransaction();
         tx.begin();
 
-        Team1 team1 = new Team1();
+        Team team1 = new Team();
         team1.setName("center");
         em.persist(team1);
 
-        Member1 member1 = new Member1();
+        Member member1 = new Member();
         member1.setUsername("a1");
         member1.setTeam(team1);
         em.persist(member1);
 
-        Member1 member2 = new Member1();
+        Member member2 = new Member();
         member2.setUsername("a2");
         member2.setTeam(team1);
         em.persist(member2);
 
-        String jpql = "select m from Member1 m join m.team t where t.name = :teamName";
-        List<Member1> members = em.createQuery(jpql, Member1.class)
+        String jpql = "select m from Member m join m.team t where t.name = :teamName";
+        List<Member> members = em.createQuery(jpql, Member.class)
                 .setParameter("teamName", "center").getResultList();
 
         assertEquals(2, members.size());
 
-        Team1 team2 = new Team1();
+        Team team2 = new Team();
         team2.setName("team2");
         em.persist(team2);
 
         member1.setTeam(team2);
-        List<Member1> members2 = em.createQuery(jpql, Member1.class)
+        List<Member> members2 = em.createQuery(jpql, Member.class)
                 .setParameter("teamName", "center").getResultList();
 
         assertEquals(1, members2.size());
 
         member2.setTeam(null);
-        List<Member1> members3 = em.createQuery(jpql, Member1.class)
+        List<Member> members3 = em.createQuery(jpql, Member.class)
                 .setParameter("teamName", "center").getResultList();
 
         assertEquals(0, members3.size());
@@ -135,11 +135,11 @@ class Member1Test {
         em.close();
     }
 
-    public Member1 createMember(String username) {
+    public Member createMember(String username) {
         EntityManager em = emf.createEntityManager();
         EntityTransaction tx = em.getTransaction();
 
-        Member1 member = new Member1();
+        Member member = new Member();
         member.setUsername(username);
         member.setAge(12);
 
@@ -151,12 +151,12 @@ class Member1Test {
         return member;
     }
 
-    public Member1 mergeMember(Member1 member) {
+    public Member mergeMember(Member member) {
         EntityManager em = emf.createEntityManager();
         EntityTransaction tx = em.getTransaction();
 
         tx.begin();
-        Member1 mergedMember = em.merge(member);
+        Member mergedMember = em.merge(member);
         tx.commit();
 
         em.close();
@@ -164,7 +164,7 @@ class Member1Test {
     }
 
     private void createRetrieveDeleteMember(EntityManager em) {
-        Member1 member = new Member1();
+        Member member = new Member();
         member.setUsername("hahahaha");
         member.setFirstName("Yun");
         member.setLastName("Min");
@@ -178,7 +178,7 @@ class Member1Test {
         member.setUsername("YuYu");
         member.setFirstName("Yun1");
 
-        Member1 foundMember = em.find(Member1.class, id);
+        Member foundMember = em.find(Member.class, id);
         System.out.println("foundMember.getUsername()  = " + foundMember.getUsername());
         System.out.println("foundMember.getAge() = " + foundMember.getAge());
         System.out.println("foundMember.getFullName() = " + foundMember.getFullName());
@@ -186,7 +186,7 @@ class Member1Test {
         foundMember.setFirstName("Good");
 
         System.out.println("before JPQL");
-        List<Member1> members = em.createQuery("select m from Member m", Member1.class).getResultList();
+        List<Member> members = em.createQuery("select m from Member m", Member.class).getResultList();
         System.out.println("after JPQL");
         System.out.println("member.size() = " + members.size());
 
