@@ -29,6 +29,12 @@ public class Member {
     @Setter @Getter
     private Team team;
 
+    @ManyToOne
+    @JoinColumn(name = "team_id_v2", insertable = false, updatable = false)
+    @Getter
+    private TeamV2 teamV2;
+
+
     @Transient
     private String lastName = "";
 

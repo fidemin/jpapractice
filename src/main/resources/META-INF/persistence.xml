@@ -3,6 +3,7 @@
     <persistence-unit name="jpapractice">
         <class>org.yunhongmin.practice.entity.Member</class>
         <class>org.yunhongmin.practice.entity.Team</class>
+        <class>org.yunhongmin.practice.entity.TeamV2</class>
         <properties>
             <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
             <property name="javax.persistence.jdbc.user" value="root"/>

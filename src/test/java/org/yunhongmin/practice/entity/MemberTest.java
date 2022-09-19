@@ -1,17 +1,17 @@
 package org.yunhongmin.practice.entity;
 
 import org.junit.jupiter.api.Test;
+import org.yunhongmin.EntityManagerFactoryManager;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class MemberTest {
-    EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpapractice");
+    EntityManagerFactory emf = EntityManagerFactoryManager.getEntityManagerFactory("jpapractice");
 
     @Test
     public void basic() {

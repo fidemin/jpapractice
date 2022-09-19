@@ -2,17 +2,16 @@ package org.yunhongmin.practice.entity;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.yunhongmin.EntityManagerFactoryManager;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
-
 import java.util.List;
 
 
 class TeamTest {
-    private final EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpapractice");
+    private final EntityManagerFactory emf = EntityManagerFactoryManager.getEntityManagerFactory("jpapractice");
 
     @Test
     public void biDirection() {
