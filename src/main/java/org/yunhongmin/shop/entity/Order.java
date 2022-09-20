@@ -18,6 +18,10 @@ public class Order {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @OneToOne
+    @JoinColumn(name = "delivery_id", unique = true)
+    private Delivery delivery;
+
     @Column(name = "order_datetime")
     private Date orderedDatetime;
 
