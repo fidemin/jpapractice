@@ -3,7 +3,7 @@ package org.yunhongmin.shop.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "delivery")
+@Table(name = "deliveries")
 public class Delivery {
     @Id @GeneratedValue
     @Column(name = "delivery_id")
