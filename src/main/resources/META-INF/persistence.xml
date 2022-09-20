@@ -24,6 +24,10 @@
         <class>org.yunhongmin.shop.entity.Order</class>
         <class>org.yunhongmin.shop.entity.OrderItem</class>
         <class>org.yunhongmin.shop.entity.Item</class>
+        <class>org.yunhongmin.shop.entity.Delivery</class>
+        <class>org.yunhongmin.shop.entity.Delivery</class>
+        <class>org.yunhongmin.shop.entity.Category</class>
+        <class>org.yunhongmin.shop.entity.CategoryItem</class>
         <properties>
             <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
             <property name="javax.persistence.jdbc.user" value="root"/>
