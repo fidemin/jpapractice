@@ -28,8 +28,6 @@ class MemberTest {
         } finally {
             em.close();
         }
-
-        emf.close();
     }
 
     @Test

@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence" version="2.1">
     <persistence-unit name="jpapractice">
-        <class>org.yunhongmin.practice.entity.Member</class>
-        <class>org.yunhongmin.practice.entity.Team</class>
-        <class>org.yunhongmin.practice.entity.TeamV2</class>
-        <class>org.yunhongmin.practice.entity.Locker</class>
         <properties>
             <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
             <property name="javax.persistence.jdbc.user" value="root"/>
@@ -20,14 +16,6 @@
         </properties>
     </persistence-unit>
     <persistence-unit name="shop">
-        <class>org.yunhongmin.shop.entity.User</class>
-        <class>org.yunhongmin.shop.entity.Order</class>
-        <class>org.yunhongmin.shop.entity.OrderItem</class>
-        <class>org.yunhongmin.shop.entity.Item</class>
-        <class>org.yunhongmin.shop.entity.Delivery</class>
-        <class>org.yunhongmin.shop.entity.Delivery</class>
-        <class>org.yunhongmin.shop.entity.Category</class>
-        <class>org.yunhongmin.shop.entity.CategoryItem</class>
         <properties>
             <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
             <property name="javax.persistence.jdbc.user" value="root"/>

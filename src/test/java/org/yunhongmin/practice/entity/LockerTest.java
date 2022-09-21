@@ -41,8 +41,6 @@ class LockerTest {
 
         tx.commit();
         em.close();
-
-
     }
 
 }

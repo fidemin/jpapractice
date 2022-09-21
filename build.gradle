@@ -9,6 +9,18 @@ repositories {
     mavenCentral()
 }
 
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+sourceSets {
+    main {
+        output.resourcesDir = java.outputDir
+    }
+}
+
 dependencies {
     implementation 'org.hibernate:hibernate-entitymanager:4.3.11.Final'
     implementation 'mysql:mysql-connector-java:8.0.30'

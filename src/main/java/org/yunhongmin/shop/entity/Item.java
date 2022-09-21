@@ -7,9 +7,11 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
+@DiscriminatorColumn(name = "DTYPE")
 @Table(name = "items")
 @Getter @Setter
-public class Item {
+public abstract class Item {
     @Id @GeneratedValue
     @Column(name = "item_id")
     private Long itemId;
