@@ -9,7 +9,8 @@ import java.util.Date;
 @Entity
 @Table(name = "users")
 @Getter @Setter
-public class User {
+@PersistenceContext(name="shop")
+public class User extends BaseEntity {
     @Id @GeneratedValue
     @Column(name = "user_id")
     private Long userId;
@@ -19,10 +20,4 @@ public class User {
     private String city;
     private String street;
     private String zipcode;
-
-    @Column(name = "created_at")
-    private Date createdAt;
-
-    @Column(name = "modified_at")
-    private Date modifiedAt;
 }

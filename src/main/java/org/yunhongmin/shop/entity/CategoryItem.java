@@ -8,7 +8,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "category_items", uniqueConstraints =
         {@UniqueConstraint(name = "udx_category_item_category_item", columnNames = {"category_id", "item_id"})})
-public class CategoryItem {
+public class CategoryItem extends BaseEntity {
     @Id @GeneratedValue
     @Column(name = "category_item_id")
     @Getter

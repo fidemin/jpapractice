@@ -7,11 +7,11 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "DTYPE")
 @Table(name = "items")
 @Getter @Setter
-public abstract class Item {
+public abstract class Item extends BaseEntity {
     @Id @GeneratedValue
     @Column(name = "item_id")
     private Long itemId;
@@ -22,10 +22,4 @@ public abstract class Item {
 
     @Column(name = "stock_quantity")
     private int stockQuantity;
-
-    @Column(name = "created_at")
-    private Date createdAt;
-
-    @Column(name = "modified_at")
-    private Date modifiedAt;
 }

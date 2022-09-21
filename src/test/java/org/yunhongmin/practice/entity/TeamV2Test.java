@@ -2,6 +2,7 @@ package org.yunhongmin.practice.entity;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.yunhongmin.EntityManagerFactoryManager;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -13,7 +14,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class TeamV2Test {
-    private final EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpapractice");
+    private final EntityManagerFactory emf = EntityManagerFactoryManager.getEntityManagerFactory("jpapractice");
 
     @Test
     public void oneToMany() {
