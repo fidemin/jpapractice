@@ -25,7 +25,8 @@ public class Member {
      *  bug fixed in 5.0.0 (<a href="https://hibernate.atlassian.net/browse/HHH-9704">jira ticket</a>)
      */
     @ManyToOne
-    @JoinColumn(name = "team_id", foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT))
+    @JoinColumn(name = "team_id", nullable = false,
+            foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT))
     @Setter @Getter
     private Team team;
 

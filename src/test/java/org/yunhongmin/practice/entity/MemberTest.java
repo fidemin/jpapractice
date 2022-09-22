@@ -3,12 +3,10 @@ package org.yunhongmin.practice.entity;
 import org.junit.jupiter.api.Test;
 import org.yunhongmin.EntityManagerFactoryManager;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
+import javax.persistence.*;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 class MemberTest {
     EntityManagerFactory emf = EntityManagerFactoryManager.getEntityManagerFactory("jpapractice");
@@ -131,6 +129,50 @@ class MemberTest {
 
         tx.commit();
         em.close();
+    }
+
+    @Test
+    public void proxy() {
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction tx = em.getTransaction();
+        tx.begin();
+
+        Team team = new Team();
+        team.setName("H's room");
+        em.persist(team);
+
+        Member member = new Member();
+        String username = "yunhongmin";
+        member.setUsername(username);
+        member.setTeam(team);
+
+
+        em.persist(member);
+
+        tx.commit();
+        em.close();
+
+        em = emf.createEntityManager();
+        tx = em.getTransaction();
+        tx.begin();
+
+        Member foundMember1 = em.getReference(Member.class, member.getId());
+        assertFalse(em.getEntityManagerFactory().getPersistenceUnitUtil().isLoaded(foundMember1));
+        assertEquals(username, foundMember1.getUsername());
+        assertTrue(em.getEntityManagerFactory().getPersistenceUnitUtil().isLoaded(foundMember1));
+
+        // foundMember1 is instance of proxy class based on Member.class
+        assertNotEquals(foundMember1.getClass(), Member.class);
+
+        em.remove(foundMember1);
+
+        tx.commit();
+        em.close();
+
+
+
+
+
     }
 
     public Member createMember(String username) {
