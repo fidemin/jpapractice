@@ -2,6 +2,7 @@ package org.yunhongmin.practice.entity;
 
 import org.junit.jupiter.api.Test;
 import org.yunhongmin.EntityManagerFactoryManager;
+import org.yunhongmin.practice.dto.MemberDto;
 
 import javax.persistence.*;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -199,13 +200,77 @@ class MemberTest {
         EntityManager em = emf.createEntityManager();
         EntityTransaction tx = em.getTransaction();
         tx.begin();
+
+        createMembersWithTeam(em);
+        List<Team> teams = em.createQuery("select m.team from Member m", Team.class).getResultList();
+        assertEquals(2, teams.size());
+        List<Member> members = em.createQuery("select m from Member m", Member.class).getResultList();
+        assertEquals(2, teams.size());
+
+        tx.rollback();
+        em.close();
+    }
+
+    @Test
+    public void JpqlForDto() {
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction tx = em.getTransaction();
+        tx.begin();
         createMembersWithTeam(em);
         tx.commit();
 
         tx.begin();
-        List<Team> teams = em.createQuery("select m.team from Member m", Team.class).getResultList();
-        assertEquals(2, teams.size());
+        String query = "select new org.yunhongmin.practice.dto.MemberDto(m.username, m.age) from Member m";
+        List<MemberDto> memberDtos = em.createQuery(query, MemberDto.class).getResultList();
+        assertEquals(2, memberDtos.size());
         tx.commit();
+        em.close();
+    }
+
+    @Test
+    public void JpqlForGroupBy() {
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction tx = em.getTransaction();
+        tx.begin();
+
+        Team team = new Team();
+        team.setName("team1");
+        em.persist(team);
+
+        Member member1 = new Member();
+        member1.setUsername("member1");
+        member1.setAge(14);
+        member1.setTeam(team);
+        em.persist(member1);
+
+        Member member2 = new Member();
+        member2.setUsername("member2");
+        member2.setAge(16);
+        member2.setTeam(team);
+        em.persist(member2);
+
+        Team team2 = new Team();
+        team.setName("team2");
+        em.persist(team2);
+
+        Member member3 = new Member();
+        member3.setUsername("member3");
+        member3.setAge(9);
+        member3.setTeam(team2);
+        em.persist(member3);
+
+
+        String query = "select m.team.name, AVG(m.age), MAX(m.age), MIN(m.age) " +
+                "from Member m " +
+                "GROUP BY m.team HAVING AVG(m.age) > 10";
+
+        List<Object[]> resultList = em.createQuery(query).getResultList();
+
+        for (Object[] row: resultList) {
+            System.out.println("row = " + row[0] + " " + row[1] + " " + row[2] + " " + row[3]);
+        }
+
+        tx.rollback();
         em.close();
     }
 
