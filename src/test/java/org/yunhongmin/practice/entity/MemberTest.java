@@ -194,6 +194,21 @@ class MemberTest {
         tx.commit();
     }
 
+    @Test
+    public void JpqlForEntity() {
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction tx = em.getTransaction();
+        tx.begin();
+        createMembersWithTeam(em);
+        tx.commit();
+
+        tx.begin();
+        List<Team> teams = em.createQuery("select m.team from Member m", Team.class).getResultList();
+        assertEquals(2, teams.size());
+        tx.commit();
+        em.close();
+    }
+
     public Member createMember(String username) {
         EntityManager em = emf.createEntityManager();
         EntityTransaction tx = em.getTransaction();
@@ -209,6 +224,27 @@ class MemberTest {
         em.close();
         return member;
     }
+
+    public void createMembersWithTeam(EntityManager em) {
+        Team team = new Team();
+        team.setName("team1");
+        em.persist(team);
+
+        Member member = new Member();
+        member.setUsername("yunhong");
+        member.setAge(12);
+        member.setTeam(team);
+
+        em.persist(member);
+
+        Member member2 = new Member();
+        member2.setUsername("yunhong1");
+        member2.setAge(13);
+        member2.setTeam(team);
+
+        em.persist(member2);
+    }
+
 
     public Member mergeMember(Member member) {
         EntityManager em = emf.createEntityManager();
