@@ -4,6 +4,9 @@ import org.junit.jupiter.api.Test;
 import org.yunhongmin.EntityManagerFactoryManager;
 
 import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -168,11 +171,27 @@ class MemberTest {
 
         tx.commit();
         em.close();
+    }
 
+    @Test
+    public void criteriaQuery() {
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction tx = em.getTransaction();
+        tx.begin();
+        Member member = new Member();
+        member.setUsername("yunhong");
+        em.persist(member);
+        tx.commit();
 
+        tx.begin();
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Member> query = cb.createQuery(Member.class);
 
-
-
+        Root<Member> m = query.from(Member.class);
+        CriteriaQuery<Member> cq = query.select(m).where(cb.equal(m.get("username"), "yunhong"));
+        List<Member> resultList = em.createQuery(cq).getResultList();
+        assertEquals(1, resultList.size());
+        tx.commit();
     }
 
     public Member createMember(String username) {
