@@ -206,7 +206,20 @@ class MemberTest {
         assertEquals(2, teams.size());
         List<Member> members = em.createQuery("select m from Member m", Member.class).getResultList();
         assertEquals(2, teams.size());
+        tx.rollback();
+        em.close();
+    }
 
+    @Test
+    public void JpqlForJoin() {
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction tx = em.getTransaction();
+        tx.begin();
+
+        createMembersWithTeam(em);
+        List<Object[]> teamAndMembers = em.createQuery(
+                "select t, m from Team t LEFT JOIN t.members m", Object[].class).getResultList();
+        assertEquals(2, teamAndMembers.size());
         tx.rollback();
         em.close();
     }
