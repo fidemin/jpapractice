@@ -23,7 +23,7 @@ class MemberTest {
         try {
             tx.begin();
             createRetrieveDeleteMember(em);
-            tx.commit();
+            tx.rollback();
         } catch (Exception e) {
             tx.rollback();
             System.out.println("Exception = " + e);
@@ -168,8 +168,9 @@ class MemberTest {
         // foundMember1 is instance of proxy class based on Member.class
         assertNotEquals(foundMember1.getClass(), Member.class);
 
+        Team team1 = foundMember1.getTeam();
         em.remove(foundMember1);
-
+        em.remove(team1);
         tx.commit();
         em.close();
     }
@@ -182,9 +183,7 @@ class MemberTest {
         Member member = new Member();
         member.setUsername("yunhong");
         em.persist(member);
-        tx.commit();
 
-        tx.begin();
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Member> query = cb.createQuery(Member.class);
 
@@ -192,7 +191,7 @@ class MemberTest {
         CriteriaQuery<Member> cq = query.select(m).where(cb.equal(m.get("username"), "yunhong"));
         List<Member> resultList = em.createQuery(cq).getResultList();
         assertEquals(1, resultList.size());
-        tx.commit();
+        tx.rollback();
     }
 
     @Test
@@ -230,13 +229,11 @@ class MemberTest {
         EntityTransaction tx = em.getTransaction();
         tx.begin();
         createMembersWithTeam(em);
-        tx.commit();
 
-        tx.begin();
         String query = "select new org.yunhongmin.practice.dto.MemberDto(m.username, m.age) from Member m";
         List<MemberDto> memberDtos = em.createQuery(query, MemberDto.class).getResultList();
         assertEquals(2, memberDtos.size());
-        tx.commit();
+        tx.rollback();
         em.close();
     }
 

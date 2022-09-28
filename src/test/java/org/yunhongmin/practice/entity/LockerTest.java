@@ -7,9 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 
-import java.util.concurrent.locks.Lock;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class LockerTest {
     @Test
@@ -29,17 +27,10 @@ class LockerTest {
         locker.setMember(member);
         em.persist(locker);
 
-        tx.commit();
-        em.close();
-
-        em = emf.createEntityManager();
-        tx = em.getTransaction();
-        tx.begin();
-
         Locker locker1 = em.find(Locker.class, locker.getId());
         assertEquals(member.getId(), locker1.getMember().getId());
 
-        tx.commit();
+        tx.rollback();
         em.close();
     }
 
