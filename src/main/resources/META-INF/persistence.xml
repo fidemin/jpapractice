@@ -21,30 +21,30 @@
             <property name="hibernate.hbm2ddl.auto" value="create"/>
         </properties>
     </persistence-unit>
-    <persistence-unit name="shop">
-        <class>org.yunhongmin.shop.entity.Album</class>
-        <class>org.yunhongmin.shop.entity.Book</class>
-        <class>org.yunhongmin.shop.entity.Category</class>
-        <class>org.yunhongmin.shop.entity.CategoryItem</class>
-        <class>org.yunhongmin.shop.entity.Delivery</class>
-        <class>org.yunhongmin.shop.entity.Item</class>
-        <class>org.yunhongmin.shop.entity.Movie</class>
-        <class>org.yunhongmin.shop.entity.Order</class>
-        <class>org.yunhongmin.shop.entity.OrderItem</class>
-        <class>org.yunhongmin.shop.entity.User</class>
-        <exclude-unlisted-classes>true</exclude-unlisted-classes>
-        <properties>
-            <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
-            <property name="javax.persistence.jdbc.user" value="root"/>
-            <property name="javax.persistence.jdbc.password" value="rlaguswjd"/>
-            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:10001/shop?characterEncoding=UTF-8&amp;serverTimezone=UTC"/>
+<!--    <persistence-unit name="shop">-->
+<!--        <class>org.yunhongmin.shop.domain.Album</class>-->
+<!--        <class>org.yunhongmin.shop.domain.Book</class>-->
+<!--        <class>org.yunhongmin.shop.domain.Category</class>-->
+<!--        <class>org.yunhongmin.shop.domain.CategoryItem</class>-->
+<!--        <class>org.yunhongmin.shop.domain.Delivery</class>-->
+<!--        <class>org.yunhongmin.shop.domain.Item</class>-->
+<!--        <class>org.yunhongmin.shop.domain.Movie</class>-->
+<!--        <class>org.yunhongmin.shop.domain.Order</class>-->
+<!--        <class>org.yunhongmin.shop.domain.OrderItem</class>-->
+<!--        <class>org.yunhongmin.shop.domain.User</class>-->
+<!--        <exclude-unlisted-classes>true</exclude-unlisted-classes>-->
+<!--        <properties>-->
+<!--            <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>-->
+<!--            <property name="javax.persistence.jdbc.user" value="root"/>-->
+<!--            <property name="javax.persistence.jdbc.password" value="rlaguswjd"/>-->
+<!--            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:10001/shop?characterEncoding=UTF-8&amp;serverTimezone=UTC"/>-->
 
-            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect"/>
-            <property name="hibernate.show_sql" value="true"/>
-            <property name="hibernate.format_sql" value="true"/>
-            <property name="hibernate.use_sql_comments" value="true"/>
-            <property name="hibername.id.new_generator_mappings" value="true"/>
-            <property name="hibernate.hbm2ddl.auto" value="create"/>
-        </properties>
-    </persistence-unit>
+<!--            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect"/>-->
+<!--            <property name="hibernate.show_sql" value="true"/>-->
+<!--            <property name="hibernate.format_sql" value="true"/>-->
+<!--            <property name="hibernate.use_sql_comments" value="true"/>-->
+<!--            <property name="hibername.id.new_generator_mappings" value="true"/>-->
+<!--            <property name="hibernate.hbm2ddl.auto" value="create"/>-->
+<!--        </properties>-->
+<!--    </persistence-unit>-->
 </persistence>

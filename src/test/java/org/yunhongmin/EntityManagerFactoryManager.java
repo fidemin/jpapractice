@@ -9,7 +9,7 @@ public class EntityManagerFactoryManager {
 
     static {
         emfMap.put("jpapractice", Persistence.createEntityManagerFactory("jpapractice"));
-        emfMap.put("shop", Persistence.createEntityManagerFactory("shop"));
+//        emfMap.put("shop", Persistence.createEntityManagerFactory("shop"));
     }
 
     public static EntityManagerFactory getEntityManagerFactory(String persistentUnit) {

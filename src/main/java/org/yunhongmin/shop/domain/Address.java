@@ -1,4 +1,4 @@
-package org.yunhongmin.shop.entity;
+package org.yunhongmin.shop.domain;
 
 
 import lombok.AllArgsConstructor;

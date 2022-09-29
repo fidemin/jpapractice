@@ -223,19 +223,19 @@ class MemberTest {
         em.close();
     }
 
-    @Test
-    public void JpqlForDto() {
-        EntityManager em = emf.createEntityManager();
-        EntityTransaction tx = em.getTransaction();
-        tx.begin();
-        createMembersWithTeam(em);
-
-        String query = "select new org.yunhongmin.practice.dto.MemberDto(m.username, m.age) from Member m";
-        List<MemberDto> memberDtos = em.createQuery(query, MemberDto.class).getResultList();
-        assertEquals(2, memberDtos.size());
-        tx.rollback();
-        em.close();
-    }
+//    @Test
+//    public void JpqlForDto() {
+//        EntityManager em = emf.createEntityManager();
+//        EntityTransaction tx = em.getTransaction();
+//        tx.begin();
+//        createMembersWithTeam(em);
+//
+//        String query = "select new org.yunhongmin.practice.dto.MemberDto(m.username, m.age) from Member m";
+//        List<MemberDto> memberDtos = em.createQuery(query, MemberDto.class).getResultList();
+//        assertEquals(2, memberDtos.size());
+//        tx.rollback();
+//        em.close();
+//    }
 
     @Test
     public void JpqlForGroupBy() {
@@ -300,7 +300,7 @@ class MemberTest {
         return member;
     }
 
-    public void createMembersWithTeam(EntityManager em) {
+    public static void createMembersWithTeam(EntityManager em) {
         Team team = new Team();
         team.setName("team1");
         em.persist(team);

@@ -1,8 +1,7 @@
-package org.yunhongmin.shop.entity;
+package org.yunhongmin.shop.domain;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.PersistenceUnit;
 import javax.persistence.Table;
 
 @Entity
