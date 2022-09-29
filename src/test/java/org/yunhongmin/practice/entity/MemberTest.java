@@ -1,16 +1,17 @@
 package org.yunhongmin.practice.entity;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.yunhongmin.EntityManagerFactoryManager;
-import org.yunhongmin.practice.dto.MemberDto;
 
-import javax.persistence.*;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
 class MemberTest {
     EntityManagerFactory emf = EntityManagerFactoryManager.getEntityManagerFactory("jpapractice");
@@ -209,19 +210,19 @@ class MemberTest {
         em.close();
     }
 
-    @Test
-    public void JpqlForJoin() {
-        EntityManager em = emf.createEntityManager();
-        EntityTransaction tx = em.getTransaction();
-        tx.begin();
-
-        createMembersWithTeam(em);
-        List<Object[]> teamAndMembers = em.createQuery(
-                "select t, m from Team t LEFT JOIN t.members m", Object[].class).getResultList();
-        assertEquals(2, teamAndMembers.size());
-        tx.rollback();
-        em.close();
-    }
+//    @Test
+//    public void JpqlForJoin() {
+//        EntityManager em = emf.createEntityManager();
+//        EntityTransaction tx = em.getTransaction();
+//        tx.begin();
+//
+//        createMembersWithTeam(em);
+//        List<Object[]> teamAndMembers = em.createQuery(
+//                "select t, m from Team t LEFT JOIN t.members m", Object[].class).getResultList();
+//        assertEquals(2, teamAndMembers.size());
+//        tx.rollback();
+//        em.close();
+//    }
 
 //    @Test
 //    public void JpqlForDto() {

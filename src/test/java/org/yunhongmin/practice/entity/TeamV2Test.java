@@ -1,17 +1,15 @@
 package org.yunhongmin.practice.entity;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.yunhongmin.EntityManagerFactoryManager;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
-
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertEquals;
+
 
 class TeamV2Test {
     private final EntityManagerFactory emf = EntityManagerFactoryManager.getEntityManagerFactory("jpapractice");
@@ -46,7 +44,7 @@ class TeamV2Test {
         tx.begin();
         TeamV2 team1 = em.find(TeamV2.class, team.getId());
         members = team1.getMembers();
-        Assertions.assertEquals(2, members.size());
+        assertEquals(2, members.size());
 
         tx.commit();
         em.close();

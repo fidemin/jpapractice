@@ -1,13 +1,14 @@
 package org.yunhongmin.practice.entity;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.yunhongmin.EntityManagerFactoryManager;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import java.util.List;
+
+import static org.junit.Assert.assertEquals;
 
 
 class TeamTest {
@@ -48,7 +49,7 @@ class TeamTest {
         for (Member member : members) {
             System.out.println("member.getUsername() = " + member.getUsername());
         }
-        Assertions.assertEquals(2, members.size());
+        assertEquals(2, members.size());
 
 
         member1 = em.find(Member.class, member1.getId());
@@ -59,7 +60,7 @@ class TeamTest {
         em.refresh(team);
 
         members = team.getMembers();
-        Assertions.assertEquals(1, members.size());
+        assertEquals(1, members.size());
 
         tx.commit();
         em.close();
