@@ -1,8 +1,6 @@
 package org.yunhongmin.practice.entity;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.yunhongmin.EntityManagerFactoryManager;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
