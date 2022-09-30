@@ -16,4 +16,7 @@ public class OrderRepository {
         em.persist(order);
     }
 
+    public Order findOne(Long orderId) {
+        return em.find(Order.class, orderId);
+    }
 }

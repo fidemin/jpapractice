@@ -45,6 +45,7 @@ public class OrderService {
             orderItem.setItem(item);
             orderItem.setCount(count);
             orderItem.setOrderPrice(item.getPrice());
+            item.removeStock(count);
             orderItemRepository.save(orderItem);
         }
 
