@@ -50,7 +50,4 @@ public class UserServiceTest {
         // Then
         fail("IllegalArgumentException required");
     }
-
-
-
 }
