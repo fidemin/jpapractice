@@ -10,17 +10,20 @@ import javax.persistence.*;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "DTYPE")
 @Table(name = "items")
-@Getter @Setter
-public abstract class Item extends BaseEntity {
+@Getter
+public class Item extends BaseEntity {
     @Id @GeneratedValue
     @Column(name = "item_id")
     private Long id;
 
+    @Setter
     private String name;
 
+    @Setter
     private int price;
 
     @Column(name = "stock_quantity")
+    @Setter
     private int stockQuantity;
 
     public void addStock(int quantity) {
