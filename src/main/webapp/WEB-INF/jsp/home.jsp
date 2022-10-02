@@ -15,8 +15,8 @@
         <h1>HELLO SHOP</h1>
         <p class="lead">회원 기능</p>
         <p>
-            <a class="btn btn-lg btn-primary" href="/members/new">회원 가입</a>
-            <a class="btn btn-lg btn-primary" href="/members">회원 목록</a>
+            <a class="btn btn-lg btn-primary" href="/users/join">회원 가입</a>
+            <a class="btn btn-lg btn-primary" href="/users">회원 목록</a>
         </p>
         <p class="lead">상품 기능</p>
         <p>

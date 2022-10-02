@@ -30,7 +30,7 @@ public class ItemController {
                 .map(ItemMapper.INSTANCE::toListItemDto)
                 .collect(Collectors.toList());
         model.addAttribute("items", listItemDtoList);
-        return "items/itemList";
+        return "items/list";
     }
 
     @RequestMapping(value = "/items/new", method = RequestMethod.GET)

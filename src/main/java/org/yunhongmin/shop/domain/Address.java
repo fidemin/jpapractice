@@ -1,10 +1,7 @@
 package org.yunhongmin.shop.domain;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.Embeddable;
 
@@ -12,6 +9,7 @@ import javax.persistence.Embeddable;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
+@Getter @Setter
 public class Address {
     private String city;
     private String street;
