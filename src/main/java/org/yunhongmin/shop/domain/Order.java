@@ -19,7 +19,7 @@ public class Order extends BaseEntity {
     @Setter
     private User user;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "delivery_id", unique = true)
     @Setter
     private Delivery delivery;

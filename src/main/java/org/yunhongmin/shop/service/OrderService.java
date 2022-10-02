@@ -3,6 +3,7 @@ package org.yunhongmin.shop.service;
 import org.javatuples.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import org.yunhongmin.shop.domain.*;
 import org.yunhongmin.shop.exception.OrderCancelException;
 import org.yunhongmin.shop.repository.ItemRepository;
@@ -70,4 +71,10 @@ public class OrderService {
             orderItem.getItem().addStock(orderItem.getCount());
         });
     }
+
+    @Transactional
+    public List<Order> search(OrderSearch orderSearch) {
+        return orderRepository.findAll(orderSearch);
+    }
+
 }

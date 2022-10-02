@@ -44,30 +44,17 @@ public class OrderServiceTest {
     @Transactional
     public void order() {
         // Given
-        User user = new User();
-        user.setName("yunhong");
         Address address = new Address("seoul", "mapo", "12345");
-        user.setAddress(address);
-        userRepository.save(user);
+        Long userId = createUser("yunhong", new Address("seoul", "mapo", "12345"));
 
         ArrayList<Pair<Long, Integer>> itemCountPairs = new ArrayList<>();
-
-        Item item1 = new Item();
-        item1.setStockQuantity(10);
-        item1.setPrice(1000);
-        item1.setName("item1");
-        itemRepository.save(item1);
-        itemCountPairs.add(new Pair<>(item1.getId(), 3));
-
-        Item item2 = new Item();
-        item2.setStockQuantity(20);
-        item2.setPrice(2000);
-        item2.setName("item2");
-        itemRepository.save(item2);
-        itemCountPairs.add(new Pair<>(item2.getId(), 7));
+        Long item1Id = createItem("item1", 1000, 10);
+        itemCountPairs.add(new Pair<>(item1Id, 3));
+        Long item2Id = createItem("item2", 2000, 20);
+        itemCountPairs.add(new Pair<>(item2Id, 7));
 
         // When
-        Long orderId = orderService.order(user.getId(), itemCountPairs);
+        Long orderId = orderService.order(userId, itemCountPairs);
 
         // Then
         Order order = orderRepository.findOne(orderId);
@@ -127,29 +114,95 @@ public class OrderServiceTest {
         fail("OrderCancelException required");
     }
 
-    private Long createOrder() {
-        User user = new User();
-        user.setName("yunhong");
+    @Test
+    @Transactional
+    public void search() {
+        // Given
         Address address = new Address("seoul", "mapo", "12345");
-        user.setAddress(address);
-        userRepository.save(user);
+        Long userId = createUser("yunhong", address);
 
         ArrayList<Pair<Long, Integer>> itemCountPairs = new ArrayList<>();
+        Long item1Id = createItem("item1", 1000, 10);
+        itemCountPairs.add(new Pair<>(item1Id, 3));
+        Long item2Id = createItem("item2", 2000, 20);
+        itemCountPairs.add(new Pair<>(item2Id, 7));
+        Long order1Id = orderService.order(userId, itemCountPairs);
 
-        Item item1 = new Item();
-        item1.setStockQuantity(10);
-        item1.setPrice(1000);
-        item1.setName("item1");
-        itemRepository.save(item1);
-        itemCountPairs.add(new Pair<>(item1.getId(), 3));
+        ArrayList<Pair<Long, Integer>> itemCountPairs2 = new ArrayList<>();
+        itemCountPairs.add(new Pair<>(item1Id, 3));
+        Long order2Id = orderService.order(userId, itemCountPairs);
 
-        Item item2 = new Item();
-        item2.setStockQuantity(20);
-        item2.setPrice(2000);
-        item2.setName("item2");
-        itemRepository.save(item2);
-        itemCountPairs.add(new Pair<>(item2.getId(), 7));
-        return orderService.order(user.getId(), itemCountPairs);
+        orderService.cancel(order2Id);
+
+        // When1
+        OrderSearch orderSearch = new OrderSearch();
+        List<Order> orders = orderService.search(orderSearch);
+
+        // Then1
+        assertEquals(2, orders.size());
+
+        // When2
+        orderSearch = new OrderSearch();
+        orderSearch.setOrderStatus(OrderStatus.ORDER);
+        orders = orderService.search(orderSearch);
+
+        // Then2
+        assertEquals(1, orders.size());
+
+        // When3
+        orderSearch = new OrderSearch();
+        orderSearch.setMemberName("yunhong");
+        orders = orderService.search(orderSearch);
+
+        // Then3
+        assertEquals(2, orders.size());
+
+        // When4
+        orderSearch = new OrderSearch();
+        orderSearch.setMemberName("yunhong");
+        orderSearch.setOrderStatus(OrderStatus.CANCEL);
+        orders = orderService.search(orderSearch);
+
+        // Then4
+        assertEquals(1, orders.size());
+
+        // When5
+        orderSearch = new OrderSearch();
+        orderSearch.setMemberName("yunhong1");
+        orders = orderService.search(orderSearch);
+
+        // Then5
+        assertEquals(0, orders.size());
+    }
+
+    private Long createOrder() {
+        Address address = new Address("seoul", "mapo", "12345");
+        Long userId = createUser("yunhong", address);
+
+        ArrayList<Pair<Long, Integer>> itemCountPairs = new ArrayList<>();
+        Long item1Id = createItem("item1", 1000, 10);
+        itemCountPairs.add(new Pair<>(item1Id, 3));
+        Long item2Id = createItem("item2", 2000, 20);
+        itemCountPairs.add(new Pair<>(item2Id, 7));
+
+        return orderService.order(userId, itemCountPairs);
+    }
+
+    private Long createUser(String username, Address address) {
+        User user = new User();
+        user.setName(username);
+        user.setAddress(address);
+        userRepository.save(user);
+        return user.getId();
+    }
+
+    private Long createItem(String name, int price, int stockQuantity) {
+        Item item = new Item();
+        item.setName(name);
+        item.setPrice(price);
+        item.setStockQuantity(stockQuantity);
+        itemRepository.save(item);
+        return item.getId();
     }
 
 }

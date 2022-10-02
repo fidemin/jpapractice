@@ -1,11 +1,16 @@
 package org.yunhongmin.shop.repository;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.util.StringUtils;
 import org.yunhongmin.shop.domain.Order;
+import org.yunhongmin.shop.domain.OrderSearch;
+import org.yunhongmin.shop.domain.OrderStatus;
 
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import java.util.List;
 
 @Repository
 public class OrderRepository {
@@ -18,5 +23,33 @@ public class OrderRepository {
 
     public Order findOne(Long orderId) {
         return em.find(Order.class, orderId);
+    }
+
+    public List<Order> findAll(OrderSearch orderSearch) {
+        StringBuilder builder = new StringBuilder();
+        builder.append("select o from Order o where 1=1");
+
+        OrderStatus orderStatus = orderSearch.getOrderStatus();
+        String memberName = orderSearch.getMemberName();
+
+        if (orderStatus != null) {
+            builder.append(" and o.status = :status");
+        }
+
+        if (StringUtils.hasText(memberName)) {
+            builder.append(" and o.user.name = :name");
+        }
+
+        Query query = em.createQuery(builder.toString());
+
+        if (orderStatus != null) {
+            query = query.setParameter("status", orderStatus);
+        }
+
+        if (StringUtils.hasText(memberName)) {
+            query = query.setParameter("name", memberName);
+        }
+
+        return query.getResultList();
     }
 }
