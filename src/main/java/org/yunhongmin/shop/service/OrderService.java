@@ -4,6 +4,7 @@ import org.javatuples.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.yunhongmin.shop.domain.*;
+import org.yunhongmin.shop.exception.OrderCancelException;
 import org.yunhongmin.shop.repository.ItemRepository;
 import org.yunhongmin.shop.repository.OrderItemRepository;
 import org.yunhongmin.shop.repository.OrderRepository;
@@ -33,6 +34,7 @@ public class OrderService {
         order.setDelivery(delivery);
         order.setUser(user);
         order.setOrderDateTime(new Date());
+        order.setStatus(OrderStatus.ORDER);
         orderRepository.save(order);
 
         for (Pair<Long, Integer> itemIdCountPair: itemIdCountPairList) {
@@ -50,5 +52,18 @@ public class OrderService {
         }
 
         return order.getId();
+    }
+
+    @Transactional
+    public void cancel(Long orderId) {
+        Order order = orderRepository.findOne(orderId);
+        if (order.getDelivery().getStatus() != DeliveryStatus.READY) {
+            throw new OrderCancelException("The delivery is in progress or completed.");
+        }
+        order.setStatus(OrderStatus.CANCEL);
+        List<OrderItem> orderItems = orderItemRepository.findOrderItemsByOrderId(orderId);
+        orderItems.forEach(orderItem -> {
+            orderItem.getItem().addStock(orderItem.getCount());
+        });
     }
 }
