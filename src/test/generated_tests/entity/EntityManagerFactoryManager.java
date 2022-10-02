@@ -1,4 +1,4 @@
-package org.yunhongmin.practice.entity;
+package entity;
 
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;

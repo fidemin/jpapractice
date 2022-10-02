@@ -1,6 +1,8 @@
-package org.yunhongmin.practice.entity;
+package entity;
 
 import org.junit.Test;
+import org.yunhongmin.practice.entity.Member;
+import org.yunhongmin.practice.entity.Team;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;

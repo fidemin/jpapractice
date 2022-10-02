@@ -14,7 +14,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "classpath:appConfig.xml")
+@ContextConfiguration(locations = "classpath:testAppConfig.xml")
 @Transactional
 public class UserServiceTest {
     @Autowired UserService userService;

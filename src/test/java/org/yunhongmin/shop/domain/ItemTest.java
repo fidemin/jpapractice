@@ -14,7 +14,7 @@ import javax.transaction.Transactional;
 import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "classpath:appConfig.xml")
+@ContextConfiguration(locations = "classpath:testAppConfig.xml")
 @Transactional
 public class ItemTest {
     @PersistenceContext

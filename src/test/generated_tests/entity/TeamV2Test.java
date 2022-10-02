@@ -1,6 +1,8 @@
-package org.yunhongmin.practice.entity;
+package entity;
 
 import org.junit.Test;
+import org.yunhongmin.practice.entity.Member;
+import org.yunhongmin.practice.entity.TeamV2;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -10,28 +12,30 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 
 
-class TeamTest {
+class TeamV2Test {
     private final EntityManagerFactory emf = EntityManagerFactoryManager.getEntityManagerFactory("jpapractice");
 
     @Test
-    public void biDirection() {
+    public void oneToMany() {
         EntityManager em = emf.createEntityManager();
         EntityTransaction tx = em.getTransaction();
         tx.begin();
 
-        Team team = new Team();
+        TeamV2 team = new TeamV2();
         team.setName("team1");
-        em.persist(team);
 
         Member member1 = new Member();
         member1.setUsername("member1");
-        member1.setTeam(team);
         em.persist(member1);
 
         Member member2 = new Member();
         member2.setUsername("member2");
-        member2.setTeam(team);
         em.persist(member2);
+
+        List<Member> members = team.getMembers();
+        members.add(member1);
+        members.add(member2);
+        em.persist(team);
 
         tx.commit();
         em.close();
@@ -39,27 +43,18 @@ class TeamTest {
         em = emf.createEntityManager();
         tx = em.getTransaction();
         tx.begin();
-
-        team = em.find(Team.class, team.getId());
-        System.out.println("team found");
-        List<Member> members = team.getMembers();
-        System.out.println("members found");
-
-        for (Member member : members) {
-            System.out.println("member.getUsername() = " + member.getUsername());
-        }
+        TeamV2 team1 = em.find(TeamV2.class, team.getId());
+        members = team1.getMembers();
         assertEquals(2, members.size());
 
+        tx.commit();
+        em.close();
 
-        member1 = em.find(Member.class, member1.getId());
-        member1.setTeam(null);
-
-        // flush required to update member1 and update team.members member variable
-        em.flush();
-        em.refresh(team);
-
-        members = team.getMembers();
-        assertEquals(1, members.size());
+        em = emf.createEntityManager();
+        tx = em.getTransaction();
+        tx.begin();
+        Member member = em.find(Member.class, member1.getId());
+        assertEquals(team.getId(), member.getTeamV2().getId());
 
         tx.commit();
         em.close();

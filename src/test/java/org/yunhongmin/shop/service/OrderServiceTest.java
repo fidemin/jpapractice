@@ -23,7 +23,7 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "classpath:appConfig.xml")
+@ContextConfiguration(locations = "classpath:testAppConfig.xml")
 public class OrderServiceTest {
     @Autowired
     UserRepository userRepository;
