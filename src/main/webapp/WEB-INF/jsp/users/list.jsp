@@ -19,13 +19,13 @@
             </tr>
             </thead>
             <tbody>
-            <c:forEach items="${members}" var="member">
+            <c:forEach items="${users}" var="user">
                 <tr>
-                    <td>${member.id}</td>
-                    <td>${member.name}</td>
-                    <td>${member.address.city}</td>
-                    <td>${member.address.street}</td>
-                    <td>${member.address.zipcode}</td>
+                    <td>${user.id}</td>
+                    <td>${user.name}</td>
+                    <td>${user.city}</td>
+                    <td>${user.street}</td>
+                    <td>${user.zipcode}</td>
                 </tr>
             </c:forEach>
             </tbody>
