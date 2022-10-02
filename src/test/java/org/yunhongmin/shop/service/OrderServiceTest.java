@@ -1,7 +1,5 @@
 package org.yunhongmin.shop.service;
 
-import org.javatuples.Pair;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,12 +14,11 @@ import org.yunhongmin.shop.repository.OrderRepository;
 import org.yunhongmin.shop.repository.UserRepository;
 
 import javax.transaction.Transactional;
-
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:testAppConfig.xml")
@@ -129,8 +126,8 @@ public class OrderServiceTest {
         itemIdCountDtos.add(new ItemIdCountDto(item2Id, 7));
         orderService.order(userId, itemIdCountDtos);
 
-        ArrayList<Pair<Long, Integer>> itemCountPairs2 = new ArrayList<>();
-        itemIdCountDtos.add(new ItemIdCountDto(item1Id, 3));
+        ArrayList<ItemIdCountDto> itemIdCountDtos2 = new ArrayList<>();
+        itemIdCountDtos2.add(new ItemIdCountDto(item1Id, 3));
         Long order2Id = orderService.order(userId, itemIdCountDtos);
 
         orderService.cancel(order2Id);
@@ -152,7 +149,7 @@ public class OrderServiceTest {
 
         // When3
         orderSearch = new OrderSearch();
-        orderSearch.setMemberName("yunhong");
+        orderSearch.setUserName("yunhong");
         orders = orderService.search(orderSearch);
 
         // Then3
@@ -160,7 +157,7 @@ public class OrderServiceTest {
 
         // When4
         orderSearch = new OrderSearch();
-        orderSearch.setMemberName("yunhong");
+        orderSearch.setUserName("yunhong");
         orderSearch.setOrderStatus(OrderStatus.CANCEL);
         orders = orderService.search(orderSearch);
 
@@ -169,7 +166,7 @@ public class OrderServiceTest {
 
         // When5
         orderSearch = new OrderSearch();
-        orderSearch.setMemberName("yunhong1");
+        orderSearch.setUserName("yunhong1");
         orders = orderService.search(orderSearch);
 
         // Then5

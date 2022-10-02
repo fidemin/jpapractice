@@ -2,9 +2,12 @@ package org.yunhongmin.shop.domain;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.yunhongmin.practice.entity.Member;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "orders")
@@ -35,4 +38,8 @@ public class Order extends BaseEntity {
     @Column(name = "total_price")
     @Setter
     private int totalPrice;
+
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    @Setter
+    private List<OrderItem> orderItems = new ArrayList<>();
 }

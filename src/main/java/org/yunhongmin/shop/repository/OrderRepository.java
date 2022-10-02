@@ -6,7 +6,6 @@ import org.yunhongmin.shop.domain.Order;
 import org.yunhongmin.shop.domain.OrderSearch;
 import org.yunhongmin.shop.domain.OrderStatus;
 
-import javax.persistence.Entity;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -27,10 +26,10 @@ public class OrderRepository {
 
     public List<Order> findAll(OrderSearch orderSearch) {
         StringBuilder builder = new StringBuilder();
-        builder.append("select o from Order o where 1=1");
+        builder.append("select o from Order o join fetch o.user where 1=1");
 
         OrderStatus orderStatus = orderSearch.getOrderStatus();
-        String memberName = orderSearch.getMemberName();
+        String memberName = orderSearch.getUserName();
 
         if (orderStatus != null) {
             builder.append(" and o.status = :status");
@@ -40,7 +39,7 @@ public class OrderRepository {
             builder.append(" and o.user.name = :name");
         }
 
-        Query query = em.createQuery(builder.toString());
+        Query query = em.createQuery(builder.toString(), Order.class);
 
         if (orderStatus != null) {
             query = query.setParameter("status", orderStatus);
@@ -50,6 +49,10 @@ public class OrderRepository {
             query = query.setParameter("name", memberName);
         }
 
-        return query.getResultList();
+        List<Order> orders = query.getResultList();
+        orders.forEach(order -> {
+            order.getOrderItems().size();
+        });
+        return orders;
     }
 }

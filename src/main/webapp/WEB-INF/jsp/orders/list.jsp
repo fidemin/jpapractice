@@ -14,7 +14,7 @@
         <div>
             <form class="navbar-form navbar-left" role="search">
                 <div class="form-group">
-                    <input type="text" name="memberName" class="form-control" placeholder="회원명" value="${orderSearch.userName}">
+                    <input type="text" name="userName" class="form-control" placeholder="회원명" value="${orderSearch.userName}">
                 </div>
                 <div class="form-group">
                     <select class="form-control" name="orderStatus">
@@ -44,12 +44,12 @@
             <c:forEach items="${orders}" var="item">
                 <tr>
                     <td>${item.id}</td>
-                    <td>${item.member.name}</td>
-                    <td>${item.orderItems[0].item.name}</td>
+                    <td>${item.userName}</td>
+                    <td>${item.orderItems[0].name}</td>
                     <td>${item.orderItems[0].orderPrice}</td>
                     <td>${item.orderItems[0].count}</td>
                     <td>${item.status}</td>
-                    <td>${item.orderDate}</td>
+                    <td>${item.orderDateTime}</td>
                     <td>
                         <c:if test="${item.status == 'ORDER'}">
                         <a href="/orders/${item.id}/cancel" class="btn btn-danger">주문취소</a>

@@ -7,14 +7,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.yunhongmin.shop.domain.Item;
+import org.yunhongmin.shop.domain.Order;
+import org.yunhongmin.shop.domain.OrderSearch;
 import org.yunhongmin.shop.domain.User;
 import org.yunhongmin.shop.dto.ItemIdCountDto;
+import org.yunhongmin.shop.dto.ListOrderDto;
+import org.yunhongmin.shop.dto.OrderSearchDto;
+import org.yunhongmin.shop.mapper.OrderMapper;
+import org.yunhongmin.shop.mapper.OrderSearchMapper;
 import org.yunhongmin.shop.service.ItemService;
 import org.yunhongmin.shop.service.OrderService;
 import org.yunhongmin.shop.service.UserService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class OrderController {
@@ -28,7 +35,15 @@ public class OrderController {
     OrderService orderService;
 
     @RequestMapping(value = "/orders", method = RequestMethod.GET)
-    public String list() {
+    public String list(OrderSearchDto orderSearchDto, Model model) {
+        OrderSearch orderSearch = OrderSearchMapper.INSTANCE.toOrderSearch(orderSearchDto);
+        List<Order> orders = orderService.search(orderSearch);
+
+        List<ListOrderDto> listOrderDtos = orders.stream()
+                .map(OrderMapper.INSTANCE::toListOrderDto).collect(Collectors.toList());
+
+        model.addAttribute("orders", listOrderDtos);
+
         return "orders/list";
     }
 
