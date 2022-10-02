@@ -17,10 +17,12 @@ public class Item extends BaseEntity {
     private Long id;
 
     @Setter
+    @Column(nullable = false)
     private String name;
 
     @Setter
-    private int price;
+    @Column(nullable = false)
+    private Integer price;
 
     @Column(name = "stock_quantity")
     @Setter

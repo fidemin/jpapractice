@@ -5,9 +5,11 @@ import org.springframework.stereotype.Service;
 import org.yunhongmin.shop.domain.Item;
 import org.yunhongmin.shop.repository.ItemRepository;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
+@Transactional
 public class ItemService {
     @Autowired
     ItemRepository itemRepository;
