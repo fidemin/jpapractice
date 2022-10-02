@@ -28,7 +28,7 @@
             <label for="isbn">ISBN</label>
             <input type="text" name="isbn" class="form-control" id="isbn" placeholder="ISBN을 입력하세요">
         </div>
-        -->
+        --%>
         <button type="submit" class="btn btn-default">Submit</button>
     </form>
     <br/>

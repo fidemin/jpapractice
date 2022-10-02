@@ -14,7 +14,6 @@ import org.yunhongmin.shop.dto.ItemIdCountDto;
 import org.yunhongmin.shop.dto.ListOrderDto;
 import org.yunhongmin.shop.dto.OrderSearchDto;
 import org.yunhongmin.shop.mapper.OrderMapper;
-import org.yunhongmin.shop.mapper.OrderSearchMapper;
 import org.yunhongmin.shop.service.ItemService;
 import org.yunhongmin.shop.service.OrderService;
 import org.yunhongmin.shop.service.UserService;
@@ -35,8 +34,7 @@ public class OrderController {
     OrderService orderService;
 
     @RequestMapping(value = "/orders", method = RequestMethod.GET)
-    public String list(OrderSearchDto orderSearchDto, Model model) {
-        OrderSearch orderSearch = OrderSearchMapper.INSTANCE.toOrderSearch(orderSearchDto);
+    public String list(OrderSearch orderSearch, Model model) {
         List<Order> orders = orderService.search(orderSearch);
 
         List<ListOrderDto> listOrderDtos = orders.stream()
