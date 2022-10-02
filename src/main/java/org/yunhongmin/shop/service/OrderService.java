@@ -3,8 +3,8 @@ package org.yunhongmin.shop.service;
 import org.javatuples.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 import org.yunhongmin.shop.domain.*;
+import org.yunhongmin.shop.dto.ItemIdCountDto;
 import org.yunhongmin.shop.exception.OrderCancelException;
 import org.yunhongmin.shop.repository.ItemRepository;
 import org.yunhongmin.shop.repository.OrderItemRepository;
@@ -24,7 +24,7 @@ public class OrderService {
     OrderItemRepository orderItemRepository;
 
     @Transactional
-    public Long order(Long userId, List<Pair<Long, Integer>> itemIdCountPairList) {
+    public Long order(Long userId, List<ItemIdCountDto> itemIdCountDtoList) {
         User user = userRepository.findOne(userId);
 
         Delivery delivery = new Delivery();
@@ -40,9 +40,9 @@ public class OrderService {
 
         int totalPrice  = 0;
 
-        for (Pair<Long, Integer> itemIdCountPair: itemIdCountPairList) {
-            Long itemId = itemIdCountPair.getValue0();
-            Integer count = itemIdCountPair.getValue1();
+        for (ItemIdCountDto itemIdCountDto: itemIdCountDtoList) {
+            Long itemId = itemIdCountDto.getItemId();
+            Integer count = itemIdCountDto.getCount();
 
             Item item = itemRepository.findOne(itemId);
             OrderItem orderItem = new OrderItem();

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.yunhongmin.shop.domain.*;
+import org.yunhongmin.shop.dto.ItemIdCountDto;
 import org.yunhongmin.shop.exception.OrderCancelException;
 import org.yunhongmin.shop.repository.ItemRepository;
 import org.yunhongmin.shop.repository.OrderItemRepository;
@@ -47,11 +48,11 @@ public class OrderServiceTest {
         Address address = new Address("seoul", "mapo", "12345");
         Long userId = createUser("yunhong", new Address("seoul", "mapo", "12345"));
 
-        ArrayList<Pair<Long, Integer>> itemCountPairs = new ArrayList<>();
+        List<ItemIdCountDto> itemCountPairs = new ArrayList<>();
         Long item1Id = createItem("item1", 1000, 10);
-        itemCountPairs.add(new Pair<>(item1Id, 3));
+        itemCountPairs.add(new ItemIdCountDto(item1Id, 3));
         Long item2Id = createItem("item2", 2000, 20);
-        itemCountPairs.add(new Pair<>(item2Id, 7));
+        itemCountPairs.add(new ItemIdCountDto(item2Id, 7));
 
         // When
         Long orderId = orderService.order(userId, itemCountPairs);
@@ -121,16 +122,16 @@ public class OrderServiceTest {
         Address address = new Address("seoul", "mapo", "12345");
         Long userId = createUser("yunhong", address);
 
-        ArrayList<Pair<Long, Integer>> itemCountPairs = new ArrayList<>();
+        List<ItemIdCountDto> itemIdCountDtos = new ArrayList<>();
         Long item1Id = createItem("item1", 1000, 10);
-        itemCountPairs.add(new Pair<>(item1Id, 3));
+        itemIdCountDtos.add(new ItemIdCountDto(item1Id, 3));
         Long item2Id = createItem("item2", 2000, 20);
-        itemCountPairs.add(new Pair<>(item2Id, 7));
-        Long order1Id = orderService.order(userId, itemCountPairs);
+        itemIdCountDtos.add(new ItemIdCountDto(item2Id, 7));
+        orderService.order(userId, itemIdCountDtos);
 
         ArrayList<Pair<Long, Integer>> itemCountPairs2 = new ArrayList<>();
-        itemCountPairs.add(new Pair<>(item1Id, 3));
-        Long order2Id = orderService.order(userId, itemCountPairs);
+        itemIdCountDtos.add(new ItemIdCountDto(item1Id, 3));
+        Long order2Id = orderService.order(userId, itemIdCountDtos);
 
         orderService.cancel(order2Id);
 
@@ -179,13 +180,13 @@ public class OrderServiceTest {
         Address address = new Address("seoul", "mapo", "12345");
         Long userId = createUser("yunhong", address);
 
-        ArrayList<Pair<Long, Integer>> itemCountPairs = new ArrayList<>();
+        List<ItemIdCountDto> itemIdCountDtos = new ArrayList<>();
         Long item1Id = createItem("item1", 1000, 10);
-        itemCountPairs.add(new Pair<>(item1Id, 3));
+        itemIdCountDtos.add(new ItemIdCountDto(item1Id, 3));
         Long item2Id = createItem("item2", 2000, 20);
-        itemCountPairs.add(new Pair<>(item2Id, 7));
+        itemIdCountDtos.add(new ItemIdCountDto(item2Id, 7));
 
-        return orderService.order(userId, itemCountPairs);
+        return orderService.order(userId, itemIdCountDtos);
     }
 
     private Long createUser(String username, Address address) {
