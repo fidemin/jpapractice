@@ -31,4 +31,8 @@ public class Order extends BaseEntity {
     @Enumerated(EnumType.STRING)
     @Setter
     private OrderStatus status;
+
+    @Column(name = "total_price")
+    @Setter
+    private int totalPrice;
 }

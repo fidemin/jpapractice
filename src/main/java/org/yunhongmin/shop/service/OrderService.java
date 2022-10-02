@@ -37,6 +37,8 @@ public class OrderService {
         order.setStatus(OrderStatus.ORDER);
         orderRepository.save(order);
 
+        int totalPrice  = 0;
+
         for (Pair<Long, Integer> itemIdCountPair: itemIdCountPairList) {
             Long itemId = itemIdCountPair.getValue0();
             Integer count = itemIdCountPair.getValue1();
@@ -48,9 +50,11 @@ public class OrderService {
             orderItem.setCount(count);
             orderItem.setOrderPrice(item.getPrice());
             item.removeStock(count);
+            totalPrice += item.getPrice() * count;
             orderItemRepository.save(orderItem);
         }
 
+        order.setTotalPrice(totalPrice);
         return order.getId();
     }
 

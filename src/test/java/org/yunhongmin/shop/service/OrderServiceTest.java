@@ -76,6 +76,7 @@ public class OrderServiceTest {
         assertEquals(OrderStatus.ORDER, order.getStatus());
         assertEquals(address, delivery.getAddress());
         assertEquals(DeliveryStatus.READY, delivery.getStatus());
+        assertEquals(3 * 1000 + 7 * 2000, order.getTotalPrice());
 
         List<OrderItem> orderItems = orderItemRepository.findOrderItemsByOrderId(order.getId());
         assertEquals(2, orderItems.size());
