@@ -19,7 +19,7 @@
             <label for="stockQuantity">수량</label>
             <input type="number" name="stockQuantity" class="form-control" id="stockQuantity" placeholder="수량을 입력하세요">
         </div>
-        <!--
+        <%--
         <div class="form-group">
             <label for="author">저자</label>
             <input type="text" name="author" class="form-control" id="author" placeholder="저자를 입력하세요">

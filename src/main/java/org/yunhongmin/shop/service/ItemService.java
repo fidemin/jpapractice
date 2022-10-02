@@ -18,6 +18,10 @@ public class ItemService {
         itemRepository.save(item);
     }
 
+    public void updateItem(Item item) {
+        itemRepository.update(item);
+    }
+
     public Item findItem(Long id) {
         return itemRepository.findOne(id);
     }

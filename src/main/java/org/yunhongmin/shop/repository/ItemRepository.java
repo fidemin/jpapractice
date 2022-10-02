@@ -17,6 +17,10 @@ public class ItemRepository {
         em.persist(item);
     }
 
+    public void update(Item item) {
+        em.merge(item);
+    }
+
     public Item findOne(Long itemId) {
         return em.find(Item.class, itemId);
     }
