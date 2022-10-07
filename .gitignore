@@ -129,3 +129,6 @@ gradle-app.setting
 
 ## generated
 src/main/generated/**
+
+## MacOS
+.DS_Store
