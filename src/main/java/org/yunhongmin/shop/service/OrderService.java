@@ -65,7 +65,7 @@ public class OrderService {
             throw new OrderCancelException("The delivery is in progress or completed.");
         }
         order.setStatus(OrderStatus.CANCEL);
-        List<OrderItem> orderItems = orderItemRepository.findOrderItemsByOrderId(orderId);
+        List<OrderItem> orderItems = orderItemRepository.findByOrderId(orderId);
         orderItems.forEach(orderItem -> {
             orderItem.getItem().addStock(orderItem.getCount());
         });

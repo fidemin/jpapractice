@@ -63,7 +63,7 @@ public class OrderServiceTest {
         assertEquals(DeliveryStatus.READY, delivery.getStatus());
         assertEquals(3 * 1000 + 7 * 2000, order.getTotalPrice());
 
-        List<OrderItem> orderItems = orderItemRepository.findOrderItemsByOrderId(order.getId());
+        List<OrderItem> orderItems = orderItemRepository.findByOrderId(order.getId());
         assertEquals(2, orderItems.size());
         OrderItem orderItem1 = orderItems.get(0);
         assertEquals(1000, orderItem1.getOrderPrice());
@@ -89,7 +89,7 @@ public class OrderServiceTest {
         Order order = orderRepository.findOne(orderId);
         assertEquals(OrderStatus.CANCEL, order.getStatus());
 
-        List<OrderItem> orderItems = orderItemRepository.findOrderItemsByOrderId(order.getId());
+        List<OrderItem> orderItems = orderItemRepository.findByOrderId(order.getId());
         OrderItem orderItem1 = orderItems.get(0);
         assertEquals(10, orderItem1.getItem().getStockQuantity());
 
