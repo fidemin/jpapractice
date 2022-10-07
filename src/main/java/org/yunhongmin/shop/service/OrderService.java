@@ -73,7 +73,7 @@ public class OrderService {
 
     @Transactional
     public List<Order> search(OrderSearch orderSearch) {
-        return orderRepository.findAll(orderSearch);
+        return orderRepository.search(orderSearch);
     }
 
 }
