@@ -19,7 +19,7 @@ public class ItemService {
     }
 
     public void updateItem(Item item) {
-        itemRepository.update(item);
+        itemRepository.save(item);
     }
 
     public Item findItem(Long id) {
