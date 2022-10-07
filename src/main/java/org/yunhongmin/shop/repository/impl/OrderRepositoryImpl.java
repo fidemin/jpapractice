@@ -1,49 +1,44 @@
 package org.yunhongmin.shop.repository.impl;
 
+import com.mysema.query.jpa.JPQLQuery;
+import com.mysema.query.jpa.impl.JPAQuery;
+import org.springframework.data.jpa.repository.support.QueryDslRepositorySupport;
 import org.springframework.util.StringUtils;
-import org.yunhongmin.shop.domain.Order;
-import org.yunhongmin.shop.domain.OrderSearch;
-import org.yunhongmin.shop.domain.OrderStatus;
+import org.yunhongmin.shop.domain.*;
 import org.yunhongmin.shop.repository.custom.CustomOrderRepository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import java.util.List;
 
 public class OrderRepositoryImpl implements CustomOrderRepository {
+
     @PersistenceContext
     EntityManager em;
 
     @Override
     public List<Order> search(OrderSearch orderSearch) {
-        StringBuilder builder = new StringBuilder();
-        builder.append("select o from Order o join fetch o.user where 1=1");
+        QOrder order = QOrder.order;
+        QUser user = QUser.user;
 
+        JPQLQuery query = new JPAQuery(em).from(order);
+
+        String userName = orderSearch.getUserName();
         OrderStatus orderStatus = orderSearch.getOrderStatus();
-        String memberName = orderSearch.getUserName();
+
+
+        if (StringUtils.hasText(userName)) {
+            query.leftJoin(order.user, user).where(user.name.contains(userName));
+        }
 
         if (orderStatus != null) {
-            builder.append(" and o.status = :status");
+            query.where(order.status.eq(orderStatus));
         }
 
-        if (StringUtils.hasText(memberName)) {
-            builder.append(" and o.user.name = :name");
-        }
+        List<Order> orders = query.list(order);
 
-        Query query = em.createQuery(builder.toString(), Order.class);
-
-        if (orderStatus != null) {
-            query = query.setParameter("status", orderStatus);
-        }
-
-        if (StringUtils.hasText(memberName)) {
-            query = query.setParameter("name", memberName);
-        }
-
-        List<Order> orders = query.getResultList();
-        orders.forEach(order -> {
-            order.getOrderItems().size();
+        orders.forEach(o -> {
+            o.getOrderItems().size();
         });
         return orders;
     }
