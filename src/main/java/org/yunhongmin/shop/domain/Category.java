@@ -2,6 +2,7 @@ package org.yunhongmin.shop.domain;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.context.annotation.Lazy;
 
 import javax.persistence.*;
 
@@ -16,7 +17,7 @@ public class Category {
     @Getter @Setter
     private String name;
 
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "parent_id")
     @Getter @Setter
     private Category parent;

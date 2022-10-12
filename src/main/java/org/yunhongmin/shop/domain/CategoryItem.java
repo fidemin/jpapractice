@@ -14,12 +14,12 @@ public class CategoryItem extends BaseEntity {
     @Getter
     private Long categoryItemId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     @Getter @Setter
     private Category category;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "item_id")
     @Getter @Setter
     private Item item;
