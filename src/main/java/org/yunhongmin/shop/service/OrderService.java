@@ -11,7 +11,9 @@ import org.yunhongmin.shop.repository.OrderRepository;
 import org.yunhongmin.shop.repository.UserRepository;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -39,11 +41,27 @@ public class OrderService {
 
         int totalPrice  = 0;
 
-        for (ItemIdCountDto itemIdCountDto: itemIdCountDtoList) {
-            Long itemId = itemIdCountDto.getItemId();
-            Integer count = itemIdCountDto.getCount();
+        List<OrderItem> orderItems = new ArrayList<>();
 
-            Item item = itemRepository.findOne(itemId);
+        HashMap<Long, ItemIdCountDto> itemIdCountHashMap = new HashMap<>();
+        for (ItemIdCountDto itemIdCountDto: itemIdCountDtoList) {
+            itemIdCountHashMap.put(itemIdCountDto.getItemId(), itemIdCountDto);
+        }
+
+        if (itemIdCountDtoList.size() != itemIdCountHashMap.size()) {
+            throw new IllegalArgumentException("some item ids are duplicate");
+        }
+
+        List<Item> items = itemRepository.findByIdIn(new ArrayList<>(itemIdCountHashMap.keySet()));
+
+        if (items.size() != itemIdCountDtoList.size()) {
+            throw new IllegalArgumentException("some item does not exist");
+        }
+
+        for (Item item: items) {
+            Long itemId = item.getId();
+            Integer count = itemIdCountHashMap.get(itemId).getCount();
+
             OrderItem orderItem = new OrderItem();
             orderItem.setOrder(order);
             orderItem.setItem(item);
@@ -51,8 +69,10 @@ public class OrderService {
             orderItem.setOrderPrice(item.getPrice());
             item.removeStock(count);
             totalPrice += item.getPrice() * count;
-            orderItemRepository.save(orderItem);
+            orderItems.add(orderItem);
         }
+
+        orderItemRepository.save(orderItems);
 
         order.setTotalPrice(totalPrice);
         return order.getId();
