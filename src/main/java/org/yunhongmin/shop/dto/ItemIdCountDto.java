@@ -6,6 +6,6 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class ItemIdCountDto {
-    Long itemId;
-    int count;
+    private Long itemId;
+    private int count;
 }

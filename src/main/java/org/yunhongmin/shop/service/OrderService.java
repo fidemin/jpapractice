@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.yunhongmin.shop.domain.*;
 import org.yunhongmin.shop.dto.ItemIdCountDto;
+import org.yunhongmin.shop.exception.NotEnoughStockException;
 import org.yunhongmin.shop.exception.OrderCancelException;
 import org.yunhongmin.shop.repository.ItemRepository;
 import org.yunhongmin.shop.repository.OrderItemRepository;
@@ -21,11 +22,19 @@ public class OrderService {
     @Autowired OrderRepository orderRepository;
     @Autowired UserRepository userRepository;
     @Autowired ItemRepository itemRepository;
-    @Autowired
-    OrderItemRepository orderItemRepository;
+    @Autowired OrderItemRepository orderItemRepository;
 
     @Transactional
-    public Long order(Long userId, List<ItemIdCountDto> itemIdCountDtoList) {
+    public Order order(Long userId, List<ItemIdCountDto> itemIdCountDtoList) {
+        HashMap<Long, ItemIdCountDto> itemIdCountHashMap = new HashMap<>();
+        for (ItemIdCountDto itemIdCountDto: itemIdCountDtoList) {
+            itemIdCountHashMap.put(itemIdCountDto.getItemId(), itemIdCountDto);
+        }
+
+        if (itemIdCountDtoList.size() != itemIdCountHashMap.size()) {
+            throw new IllegalArgumentException("some item ids are duplicate");
+        }
+
         User user = userRepository.findOne(userId);
 
         Delivery delivery = new Delivery();
@@ -37,20 +46,6 @@ public class OrderService {
         order.setUser(user);
         order.setOrderDateTime(new Date());
         order.setStatus(OrderStatus.ORDER);
-        orderRepository.save(order);
-
-        int totalPrice  = 0;
-
-        List<OrderItem> orderItems = new ArrayList<>();
-
-        HashMap<Long, ItemIdCountDto> itemIdCountHashMap = new HashMap<>();
-        for (ItemIdCountDto itemIdCountDto: itemIdCountDtoList) {
-            itemIdCountHashMap.put(itemIdCountDto.getItemId(), itemIdCountDto);
-        }
-
-        if (itemIdCountDtoList.size() != itemIdCountHashMap.size()) {
-            throw new IllegalArgumentException("some item ids are duplicate");
-        }
 
         List<Item> items = itemRepository.findByIdIn(new ArrayList<>(itemIdCountHashMap.keySet()));
 
@@ -58,24 +53,39 @@ public class OrderService {
             throw new IllegalArgumentException("some item does not exist");
         }
 
+        int totalPrice  = 0;
         for (Item item: items) {
-            Long itemId = item.getId();
-            Integer count = itemIdCountHashMap.get(itemId).getCount();
-
-            OrderItem orderItem = new OrderItem();
-            orderItem.setOrder(order);
-            orderItem.setItem(item);
-            orderItem.setCount(count);
-            orderItem.setOrderPrice(item.getPrice());
-            item.removeStock(count);
+            int count = itemIdCountHashMap.get(item.getId()).getCount();
             totalPrice += item.getPrice() * count;
-            orderItems.add(orderItem);
         }
 
+        order.setTotalPrice(totalPrice);
+        orderRepository.save(order);
+
+        List<OrderItem> orderItems = new ArrayList<>();
+        for (Item item: items) {
+            int count = itemIdCountHashMap.get(item.getId()).getCount();
+            OrderItem orderItem = createOrderItem(item, order, count);
+            orderItems.add(orderItem);
+        }
         orderItemRepository.save(orderItems);
 
-        order.setTotalPrice(totalPrice);
-        return order.getId();
+        return order;
+    }
+
+    private OrderItem createOrderItem(Item item, Order order, int count) {
+        OrderItem orderItem = new OrderItem();
+        orderItem.setOrder(order);
+        orderItem.setItem(item);
+        orderItem.setCount(count);
+        orderItem.setOrderPrice(item.getPrice());
+
+        try {
+            item.removeStock(count);
+        } catch (NotEnoughStockException e) {
+            throw new IllegalArgumentException("Not enough stock :" + item.getId());
+        }
+        return orderItem;
     }
 
     @Transactional

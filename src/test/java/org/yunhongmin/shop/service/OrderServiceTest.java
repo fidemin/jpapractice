@@ -52,7 +52,7 @@ public class OrderServiceTest {
         itemCountPairs.add(new ItemIdCountDto(item2Id, 7));
 
         // When
-        Long orderId = orderService.order(userId, itemCountPairs);
+        Long orderId = orderService.order(userId, itemCountPairs).getId();
 
         // Then
         Order order = orderRepository.findOne(orderId);
@@ -128,7 +128,7 @@ public class OrderServiceTest {
 
         ArrayList<ItemIdCountDto> itemIdCountDtos2 = new ArrayList<>();
         itemIdCountDtos2.add(new ItemIdCountDto(item1Id, 3));
-        Long order2Id = orderService.order(userId, itemIdCountDtos);
+        Long order2Id = orderService.order(userId, itemIdCountDtos).getId();
 
         orderService.cancel(order2Id);
 
@@ -183,7 +183,7 @@ public class OrderServiceTest {
         Long item2Id = createItem("item2", 2000, 20);
         itemIdCountDtos.add(new ItemIdCountDto(item2Id, 7));
 
-        return orderService.order(userId, itemIdCountDtos);
+        return orderService.order(userId, itemIdCountDtos).getId();
     }
 
     private Long createUser(String username, Address address) {
