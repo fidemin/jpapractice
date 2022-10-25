@@ -4,6 +4,7 @@ import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.yunhongmin.shop.annotation.PerformanceLogging;
 import org.yunhongmin.shop.domain.User;
 import org.yunhongmin.shop.repository.UserRepository;
 
@@ -19,6 +20,7 @@ public class UserService {
      * @param user
      * @return userId
      */
+    @PerformanceLogging
     public Long join(User user) {
         validateDuplicateUser(user);
         userRepository.save(user);
