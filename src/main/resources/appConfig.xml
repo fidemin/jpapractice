@@ -20,9 +20,7 @@
     <jpa:repositories base-package="org.yunhongmin.shop.repository" />
     <aop:aspectj-autoproxy/>
 
-    <context:component-scan base-package="org.yunhongmin.shop.repository
-    org.yunhongmin.shop.service
-    org.yunhongmin.shop.aspect"/>
+    <context:component-scan base-package="org.yunhongmin.shop" />
 
     <bean id="dataSource" class="org.apache.tomcat.jdbc.pool.DataSource">
         <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>

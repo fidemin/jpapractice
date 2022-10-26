@@ -1,17 +1,20 @@
 package org.yunhongmin.shop.service
 
+import org.springframework.context.ApplicationEventPublisher
 import org.yunhongmin.shop.domain.User
 import org.yunhongmin.shop.repository.UserRepository
 import spock.lang.Specification
 
 class UserServiceGroovyTest extends Specification {
     UserRepository userRepository = Mock(UserRepository)
+    ApplicationEventPublisher applicationEventPublisher = Mock(ApplicationEventPublisher)
     UserService userService
 
     def "join Success"() {
         given:
         userService = new UserService(
-                userRepository: userRepository
+                userRepository: userRepository,
+                applicationEventPublisher: applicationEventPublisher
         )
 
         def name = "Yunhong"

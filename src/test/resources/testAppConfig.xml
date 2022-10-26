@@ -15,7 +15,7 @@
     <tx:annotation-driven/>
     <jpa:repositories base-package="org.yunhongmin.shop.repository" />
 
-    <context:component-scan base-package="org.yunhongmin.shop.service, org.yunhongmin.shop.repository"/>
+    <context:component-scan base-package="org.yunhongmin.shop"/>
 
     <bean id="dataSource" class="org.apache.tomcat.jdbc.pool.DataSource">
         <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
