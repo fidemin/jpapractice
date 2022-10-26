@@ -55,12 +55,15 @@ dependencies {
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.2.Final'
 
     /* test */
-    testImplementation 'org.springframework:spring-test:4.1.9.RELEASE'
-    testImplementation 'junit:junit:4.13.2'
-    testCompileOnly 'org.projectlombok:lombok:1.18.24'
-    testAnnotationProcessor 'org.projectlombok:lombok:1.18.24'
     testImplementation 'org.codehaus.groovy:groovy-all:2.5.19'
     testImplementation 'org.spockframework:spock-core:2.3-groovy-2.5'
+    testImplementation 'org.springframework:spring-test:4.1.9.RELEASE'
+    testImplementation 'junit:junit:4.13.2'
+    // adding junit-vintage-engine makes test runs both groovy and java.
+    // without this, only groovy tests runs (spock-core:2.3 may causes this)
+    testImplementation 'org.junit.vintage:junit-vintage-engine:5.8.2'
+    testCompileOnly 'org.projectlombok:lombok:1.18.24'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.24'
 
 }
 
