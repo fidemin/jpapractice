@@ -21,5 +21,7 @@ public interface UserMapper {
     @Mapping(source = "address.city", target = "city")
     @Mapping(source = "address.street", target = "street")
     @Mapping(source = "address.zipcode", target = "zipcode")
+    @Mapping(source = "createdAt", target = "createdAt", dateFormat = "YYYY-MM-dd HH:mm:ss")
+    @Mapping(source = "modifiedAt", target = "modifiedAt", dateFormat = "YYYY-MM-dd HH:mm:ss")
     ListUserDto toListUserDto(User user);
 }

@@ -5,6 +5,8 @@ import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import java.util.Date;
 
 @MappedSuperclass
@@ -15,4 +17,16 @@ public class BaseEntity {
 
     @Column(name = "modified_at")
     private Date modifiedAt;
+
+    @PrePersist
+    void createdAt() {
+        this.createdAt = this.modifiedAt = new Date();
+    }
+
+    @PreUpdate
+    void updatedAt() {
+        this.modifiedAt = new Date();
+    }
+
+
 }

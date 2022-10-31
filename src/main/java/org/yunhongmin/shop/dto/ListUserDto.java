@@ -2,6 +2,8 @@ package org.yunhongmin.shop.dto;
 
 import lombok.Data;
 
+import java.util.Date;
+
 @Data
 public class ListUserDto {
     String id;
@@ -9,4 +11,6 @@ public class ListUserDto {
     String city;
     String street;
     String zipcode;
+    String createdAt;
+    String modifiedAt;
 }

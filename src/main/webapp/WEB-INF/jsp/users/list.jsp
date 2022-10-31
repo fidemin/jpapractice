@@ -16,6 +16,8 @@
                 <th>도시</th>
                 <th>주소</th>
                 <th>우편번호</th>
+                <th>생성일시</th>
+                <th>수정일시</th>
             </tr>
             </thead>
             <tbody>
@@ -26,6 +28,8 @@
                     <td>${user.city}</td>
                     <td>${user.street}</td>
                     <td>${user.zipcode}</td>
+                    <td>${user.createdAt}</td>
+                    <td>${user.modifiedAt}</td>
                 </tr>
             </c:forEach>
             </tbody>

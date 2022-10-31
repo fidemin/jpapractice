@@ -19,7 +19,7 @@
 
     <bean id="dataSource" class="org.apache.tomcat.jdbc.pool.DataSource">
         <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
-        <property name="url" value="jdbc:mysql://localhost:10001/test_shop?characterEncoding=UTF-8&amp;serverTimezone=UTC" />
+        <property name="url" value="jdbc:mysql://localhost:10001/test_shop?characterEncoding=UTF-8&amp;serverTimezone=Asia/Seoul" />
         <property name="username" value="root"/>
         <property name="password" value="rlaguswjd"/>
     </bean>
