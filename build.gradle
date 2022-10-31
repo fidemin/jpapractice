@@ -54,6 +54,8 @@ dependencies {
     implementation 'org.mapstruct:mapstruct:1.5.2.Final'
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.2.Final'
 
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.4.2'
+
     /* test */
     testImplementation 'org.codehaus.groovy:groovy-all:2.5.19'
     testImplementation 'org.spockframework:spock-core:2.3-groovy-2.5'

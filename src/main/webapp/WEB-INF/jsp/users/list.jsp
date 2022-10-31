@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html>
@@ -28,8 +29,8 @@
                     <td>${user.city}</td>
                     <td>${user.street}</td>
                     <td>${user.zipcode}</td>
-                    <td>${user.createdAt}</td>
-                    <td>${user.modifiedAt}</td>
+                    <td><fmt:formatDate value="${user.createdAt}" pattern="YYYY-MM-DD hh:mm:ss" /></td>
+                    <td><fmt:formatDate value="${user.modifiedAt}" pattern="YYYY-MM-DD hh:mm:ss" /></td>
                 </tr>
             </c:forEach>
             </tbody>

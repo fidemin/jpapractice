@@ -1,5 +1,6 @@
 package org.yunhongmin.shop.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.util.Date;
@@ -11,6 +12,6 @@ public class ListUserDto {
     String city;
     String street;
     String zipcode;
-    String createdAt;
-    String modifiedAt;
+    Date createdAt;
+    Date modifiedAt;
 }
