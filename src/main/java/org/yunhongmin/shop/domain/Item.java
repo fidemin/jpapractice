@@ -2,6 +2,8 @@ package org.yunhongmin.shop.domain;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.envers.AuditOverride;
+import org.hibernate.envers.Audited;
 import org.yunhongmin.shop.exception.NotEnoughStockException;
 
 import javax.persistence.*;
@@ -10,6 +12,8 @@ import javax.persistence.*;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "DTYPE")
 @Table(name = "items")
+@Audited
+@AuditOverride(forClass = BaseEntity.class)
 @Getter
 public class Item extends BaseEntity {
     @Id @GeneratedValue

@@ -3,11 +3,18 @@ package org.yunhongmin.shop.domain;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.envers.AuditOverride;
+import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
 
+import static org.hibernate.envers.RelationTargetAuditMode.NOT_AUDITED;
+
 @Entity
 @Table(name = "order_items")
+@Audited
+//@Audited(targetAuditMode = NOT_AUDITED)
+@AuditOverride(forClass = BaseEntity.class)
 @Getter
 public class OrderItem extends BaseEntity {
     @Id @GeneratedValue

@@ -2,6 +2,9 @@ package org.yunhongmin.shop.domain;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.envers.AuditOverride;
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.RelationTargetAuditMode;
 import org.yunhongmin.practice.entity.Member;
 
 import javax.persistence.*;
@@ -11,6 +14,8 @@ import java.util.List;
 
 @Entity
 @Table(name = "orders")
+@Audited
+@AuditOverride(forClass = BaseEntity.class)
 @Getter
 public class Order extends BaseEntity {
     @Id @GeneratedValue
@@ -24,6 +29,7 @@ public class Order extends BaseEntity {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "delivery_id", unique = true)
+    @Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
     @Setter
     private Delivery delivery;
 
