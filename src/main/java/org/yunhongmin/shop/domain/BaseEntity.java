@@ -27,6 +27,4 @@ public class BaseEntity {
     void updatedAt() {
         this.modifiedAt = new Date();
     }
-
-
 }
