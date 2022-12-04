@@ -23,6 +23,8 @@ dependencies {
     implementation 'org.springframework:spring-orm:4.3.24.RELEASE'
     implementation 'org.springframework:spring-aop:4.3.24.RELEASE'
     implementation 'org.springframework.data:spring-data-jpa:1.8.2.RELEASE'
+    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-hystrix:1.4.5.RELEASE'
+
 
 
     // query dsl and generated code

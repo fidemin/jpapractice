@@ -2,7 +2,6 @@ package org.yunhongmin.shop.repository.impl;
 
 import com.mysema.query.jpa.JPQLQuery;
 import com.mysema.query.jpa.impl.JPAQuery;
-import org.springframework.data.jpa.repository.support.QueryDslRepositorySupport;
 import org.springframework.util.StringUtils;
 import org.yunhongmin.shop.domain.*;
 import org.yunhongmin.shop.repository.custom.CustomOrderRepository;
